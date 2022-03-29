@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using MySqlConnector;
 using System.Data;
+using System.IO;
 
 namespace ConvertMySqlTableCharsetUTF8mb4
 {
     internal class Program
     {
+        static DateTime datestart = DateTime.MinValue;
+        static DateTime dateend = DateTime.MinValue;
+
         static void Main(string[] args)
         {
             try
@@ -20,6 +24,17 @@ namespace ConvertMySqlTableCharsetUTF8mb4
             {
                 Console.WriteLine(ex.ToString());
             }
+
+            dateend = DateTime.Now;
+
+            TimeSpan timeUsed = dateend - datestart;
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine($"Begin Time : {datestart.ToString("yyyy-MM-dd HH:mm:ss")}");
+            Console.WriteLine($"End Time   : {dateend.ToString("yyyy-MM-dd HH:mm:ss")}");
+            Console.WriteLine($"Total Time : {timeUsed.Days} d {timeUsed.Hours} h {timeUsed.Minutes} m {timeUsed.Seconds} s {timeUsed.Milliseconds} ms");
 
             Console.WriteLine();
             Console.WriteLine();
@@ -32,9 +47,17 @@ namespace ConvertMySqlTableCharsetUTF8mb4
 
         static void run()
         {
-            Console.WriteLine("Enter MySQL Connection String:");
+            Console.WriteLine("Enter MySQL Connection String: (server=127.0.0.1;user=<username>;pwd=<pwd>;)");
+            Console.WriteLine();
 
             string constr = Console.ReadLine();
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            datestart = DateTime.Now;
+
+            Console.WriteLine("Task begin...");
 
             Console.WriteLine();
             Console.WriteLine();
@@ -47,8 +70,6 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                     cmd.Connection = conn;
 
                     DataTable dtDatabase = new DataTable();
-
-
 
                     cmd.CommandText = "SELECT * FROM information_schema.SCHEMATA;";
                     MySqlDataAdapter da1 = new MySqlDataAdapter(cmd);
@@ -112,9 +133,9 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                                     cmd.ExecuteNonQuery();
                                     Console.WriteLine($"{tablename}: converted success!");
                                 }
-                                catch
+                                catch (Exception ex)
                                 {
-                                    Console.WriteLine($"{tablename}: Failed!");
+                                    Console.WriteLine($"{tablename}: Failed! {ex.Message}");
                                 }
                             }
                             else
@@ -127,8 +148,6 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                     conn.Close();
                 }
             }
-
-            
         }
     }
 }

@@ -4,7 +4,7 @@ A C# console program that will convert default character set of all database and
 
 <b>utf8mb4</b> is the default character set started in MySQL 8. It has the best support for all the language characters of the world, including emoji characters etc. Thus, using utf8mb4 has the best compatible if your application uses variety of unicode characters. This program will be useful when you need to perform a batch conversion throughout all the databases and tables from old projects at once.
 
-This uses MySqlConnector (MIT) as connector to MySQL.
+This program uses MySqlConnector (MIT) as connector to MySQL.
 
 - https://github.com/mysql-net/MySqlConnector
 - https://www.nuget.org/packages/MySqlConnector

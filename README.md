@@ -91,8 +91,10 @@ In C#,
 ```
 cmd.CommandText = $"use `{database}`";
 cmd.ExecuteNonQuery();
-cmd.CommandText = "show table status;";
+
 DataTable dtTables = new DataTable();
+
+cmd.CommandText = "show table status;";
 MySqlDataAdapter da2 = new MySqlDataAdapter(cmd);
 da2.Fill(dtTables);
 ```

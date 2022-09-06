@@ -63,7 +63,7 @@ foreach (DataRow dr in dtDatabase.Rows)
     switch (database)
     {
         case "information_schema":
-        case "myql":
+        case "mysql":
         case "performance_schema":
         case "sys":
             continue;

@@ -82,7 +82,7 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                         switch (database)
                         {
                             case "information_schema":
-                            case "myql":
+                            case "mysql":
                             case "performance_schema":
                             case "sys":
                                 continue;

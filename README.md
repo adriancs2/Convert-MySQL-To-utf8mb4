@@ -1,6 +1,6 @@
 # Convert-MySQL-To-utf8mb4
 
-A C# console program that will convert default character set of all database and tables to utf8mb4 and collation of utf8mb4_general_ci.
+A C# console program that will convert default character set of all database and tables to utf8mb4 and collation of utf8mb4_0900_ai_ci.
 
 <b>utf8mb4</b> is the default character set started in MySQL 8. It has the best support for all the language characters of the world, including emoji characters etc. Thus, using utf8mb4 has the best compatible if your application uses variety of unicode characters. This program will be useful when you need to perform a batch conversion throughout all the databases and tables from old projects at once.
 
@@ -51,7 +51,7 @@ But first, the following databases are needed to be ignored, as they are MySQL r
 
 The SQL statement for conversion of database character set:
 ```
-ALTER DATABASE `{database name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER DATABASE `{database name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 ```
 In C#,
 ```
@@ -72,13 +72,13 @@ foreach (DataRow dr in dtDatabase.Rows)
     string db_charset = dr["DEFAULT_CHARACTER_SET_NAME"] + "";
     string db_collation = dr["DEFAULT_COLLATION_NAME"] + "";
 
-    if (db_charset == "utf8mb4" && db_collation == "utf8mb4_general_ci")
+    if (db_charset == "utf8mb4" && db_collation == "utf8mb4_0900_ai_ci")
     {
         // do nothing
     }
     else
     {
-        cmd.CommandText = $"ALTER DATABASE `{database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;";
+        cmd.CommandText = $"ALTER DATABASE `{database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
         cmd.ExecuteNonQuery();
     }
 }
@@ -102,10 +102,10 @@ Then, loop through each table to obtain the following column value:
 
 - <b>Name</b> = the table's name
 - <b>Collation</b> = the collation character set
-- 
+
 The SQL statement for conversion of table's character set:
 ```
-ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 ```
 In C#,
 ```
@@ -114,11 +114,11 @@ foreach (DataRow dr2 in dtTables.Rows)
     string tablename = dr2["Name"] + "";
     string tableCollation = dr2["Collation"] + "";
 
-    if (tableCollation != "utf8mb4_general_ci")
+    if (tableCollation != "utf8mb4_0900_ai_ci")
     {
         try
         {
-            cmd.CommandText = $"ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;";
+            cmd.CommandText = $"ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
             cmd.ExecuteNonQuery();
         }
         catch (Exception ex)

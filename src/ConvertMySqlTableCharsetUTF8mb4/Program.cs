@@ -97,13 +97,13 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                         Console.WriteLine($"Handling database: {database}");
                         Console.WriteLine();
 
-                        if (db_charset == "utf8mb4" && db_collation == "utf8mb4_general_ci")
+                        if (db_charset == "utf8mb4" && db_collation == "utf8mb4_0900_ai_ci")
                         {
                             Console.WriteLine("Database Conversion is not needed");
                         }
                         else
                         {
-                            cmd.CommandText = $"ALTER DATABASE `{database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;";
+                            cmd.CommandText = $"ALTER DATABASE `{database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
                             cmd.ExecuteNonQuery();
                             Console.WriteLine("Database Charset converted.");
                         }
@@ -125,11 +125,11 @@ namespace ConvertMySqlTableCharsetUTF8mb4
                             string tablename = dr2["Name"] + "";
                             string tableCollation = dr2["Collation"] + "";
 
-                            if (tableCollation != "utf8mb4_general_ci")
+                            if (tableCollation != "utf8mb4_0900_ai_ci")
                             {
                                 try
                                 {
-                                    cmd.CommandText = $"ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;";
+                                    cmd.CommandText = $"ALTER TABLE `{tablename}` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
                                     cmd.ExecuteNonQuery();
                                     Console.WriteLine($"{tablename}: converted success!");
                                 }
